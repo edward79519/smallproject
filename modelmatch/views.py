@@ -1,0 +1,23 @@
+from django.shortcuts import render
+
+# Create your views here.
+from django.template import loader
+from django.http import HttpResponse
+
+def index(request):
+    template = loader.get_template('modelmatch/index.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
+
+def calculator(request):
+    template = loader.get_template('modelmatch/calculator.html')
+    if request.method == "GET" and "arr_list" in request.GET:
+        arr_list = list(map(lambda x: int(x), request.GET['arr_list'].replace(" ", "").split(",")))
+        context = {
+            'get': request.GET,
+            'out': arr_list,
+        }
+        return HttpResponse(template.render(context, request))
+    else:
+        context = {}
+        return HttpResponse(template.render(context, request))

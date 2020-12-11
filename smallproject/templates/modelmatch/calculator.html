@@ -1,0 +1,48 @@
+{% extends 'modelmatch/base.html' %}
+
+{% block title %}Inaenergy{% endblock %}
+{% block content %}
+<h1 class="mt-5">計算機</h1>
+
+<form class="was-validated" action="/modelmatch/calculator/" method="get">
+    <div class="form-row">
+        <div class="form-col-md-4 mb-3">
+            <label for="arr_list">組串陣列</label>
+            {% if get %}
+            <input class="form-control is-valid" id="arr_list" placeholder="First name" type="text" name="arr_list" value="{{ get.arr_list }}" required>
+            {% else %}
+            <input class="form-control is-valid" id="arr_list" placeholder="First name" type="text" name="arr_list" required>
+            {% endif %}
+            <div class="invalid-feedback">
+            Please choose a user.
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-col-md-4 mb-3">
+            <label for="target">目標片數</label>
+            <input class="form-control is-valid" id="target" type="number" name="target" required max="10000" value="{{ get.target }}">
+            <div class="invalid-feedback">
+            Please choose a user.
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-col-md-8 mb-3">
+            <label for="delta">允許誤差</label>
+            <input class="custom-range" id="delta" type="range" min="1" max="1000" name="delta" value="{{ get.delta }}" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="foem-col-md-4 mb-3">
+            <button class="btn btn-primary" type="submit">Submit form</button>
+        </div>
+    </div>
+</form>
+<p>{{ get.arr_list }}, {{ get.target }}, {{ get.delta }}</p>
+<p>{{ out }}</p>
+
+
+
+
+{% endblock %}
