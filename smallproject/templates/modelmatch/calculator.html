@@ -8,40 +8,60 @@
     <div class="form-row">
         <div class="form-col-md-4 mb-3">
             <label for="arr_list">組串陣列</label>
-            {% if get %}
-            <input class="form-control is-valid" id="arr_list" placeholder="First name" type="text" name="arr_list" value="{{ get.arr_list }}" required>
-            {% else %}
-            <input class="form-control is-valid" id="arr_list" placeholder="First name" type="text" name="arr_list" required>
-            {% endif %}
+            <input class="form-control is-valid" id="arr_list" placeholder="211, ..." type="text" name="arr_list" value="{{ get.arr_list }}" pattern="([0-9]*[,]?)*" required>
             <div class="invalid-feedback">
-            Please choose a user.
+            請依照格式輸入：100,293,....
             </div>
         </div>
     </div>
     <div class="form-row">
         <div class="form-col-md-4 mb-3">
             <label for="target">目標片數</label>
-            <input class="form-control is-valid" id="target" type="number" name="target" required max="10000" value="{{ get.target }}">
+            <input class="form-control is-valid" id="target" type="number" name="target" required min="1" max="10000" value="{{ get.target }}">
             <div class="invalid-feedback">
-            Please choose a user.
+            請輸入1~10000間的整數
             </div>
         </div>
     </div>
     <div class="form-row">
         <div class="form-col-md-8 mb-3">
-            <label for="delta">允許誤差</label>
-            <input class="custom-range" id="delta" type="range" min="1" max="1000" name="delta" value="{{ get.delta }}" required>
+            <label for="delta">允許誤差(片)</label>
+            <input class="form-control is-valid" id="delta" type="number" min="1" max="100" name="delta" value="{{ get.delta }}" required>
+            <div class="invalid-feedback">
+            請輸入1~100間的整數
+            </div>
         </div>
     </div>
     <div class="form-row">
         <div class="foem-col-md-4 mb-3">
-            <button class="btn btn-primary" type="submit">Submit form</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
         </div>
     </div>
 </form>
-<p>{{ get.arr_list }}, {{ get.target }}, {{ get.delta }}</p>
-<p>{{ out }}</p>
 
+{% if output %}
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">組合</th>
+                <th scope="col">片數</th>
+                <th scope="col">組數</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ou in output %}
+            <tr>
+                <td>{{ ou.0 }}</td>
+                <td>{{ ou.1 }}</td>
+                <td>{{ ou.2}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+    "there's no data"
+{% endif %}
 
 
 

@@ -1,24 +1,18 @@
-# 片數組
-arr_num = [264, 286, 308, 330,  276, 299, 322, 345,  288, 312, 336, 360]
-
-# 目標總片數
-target = 2000
-
-delta = 0.003
-
-def fun(target, delta, arr, set_cnt=1):
-    if target/max(arr) < 5:
+def find_match(target, delta, arr_lst, set_cnt=1):
+    if target/(min(arr_lst)+max(arr_lst))*2 < 5:
         # 答案的list
         lst_ans = []
 
         # 將 input arr_num 換成 [label, num] 形式
         # 固定的組串數
         lst_fx = []
-        for arr in arr_num:
+        for arr in arr_lst:
             lst_fx.append([str(arr), arr])
             # 如果輸入的條件剛好滿足在範圍內，就直接丟進答案 lst_ans 內
-            if target * (1 - delta) <= arr < target:
+            print(arr)
+            if target - delta <= arr < target:
                 lst_ans.append([str(arr), arr])
+            print(lst_ans)
 
         # 開始計算
         # 起始數據從原本加起
@@ -42,18 +36,19 @@ def fun(target, delta, arr, set_cnt=1):
                     # 計算加總值
                     num = num_in + num_fx
                     cnt += 1
-                    print(cnt, lab, num_in, num)
+                    print(cnt, lab, num, set_cnt)
 
                     # 判斷加總沒有超過 target
                     if num <= target:
+
                         # 如果加總接近目標，丟進 ans
-                        if num >= target * (1 - delta):
+                        if num >= target - delta:
                             lst_ans.append([lab, num, set_cnt])
+                            print(lst_ans)
                         # 如果沒有超過 target 丟到 out 等等丟回 input 再算
                         lst_out.append([lab, num])
             lst_in = lst_out
-        return lst_ans
+        return sorted(lst_ans, key=lambda x: x[1], reverse=True)
     else:
-        return fun(target/2, delta, arr, set_cnt*2)
+        return find_match(target/2, delta, arr_lst, set_cnt*2)
 
-print(fun(target, delta, arr_num))
